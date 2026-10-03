@@ -21,8 +21,8 @@ The window can be closed — the app keeps running behind the glasses icon in th
 ## Build
 
 ```sh
-make            # build (arm64) → re-sign ad-hoc → dist/SpoofDPI.App.zip
-make run        # build, sign and launch dist/SpoofDPI App.app
+make            # build (arm64) → re-sign → dist/SpoofDPI.App.zip
+make install    # build, sign, replace /Applications/SpoofDPI App.app and relaunch
 make help       # list all targets
 ```
 
@@ -32,16 +32,22 @@ make help       # list all targets
 | `dist` | Copy the app into `dist/` |
 | `sign` | Re-sign `dist/SpoofDPI App.app` (inside-out) and verify |
 | `zip` | Create `dist/SpoofDPI.App.zip` |
-| `update-core` | Download a SpoofDPI release, verify checksums, replace the embedded binaries |
-| `core-version` | Print the embedded SpoofDPI version |
+| `run` | Launch the signed app from `dist/` |
+| `install` / `uninstall` | Quit the running app, then install into / remove from `/Applications` |
+| `bump` | Increment the build number in the project and `Other/ActualBuildNumber.txt` |
+| `version` | Print app version, build number and embedded SpoofDPI version |
+| `update-core` | Download a SpoofDPI release, verify checksums, replace the embedded binary |
+| `proxy-reset` | Turn off the system proxy on all network services (after a crash) |
 | `clean` | Remove `build/` and `dist/` |
 
 ### Signing
 
-By default the app is signed **ad-hoc** (`SIGN_IDENTITY=-`). To use a self-signed certificate from your Keychain (keeps the signature stable across rebuilds, so macOS permissions persist):
+The app is signed with the self-signed Keychain identity **`SpoofDPI Local`** when it exists, otherwise ad-hoc (a stable signature across rebuilds, so the login item and macOS permissions persist). Create it once in Keychain Access → Certificate Assistant → Create a Certificate… (Identity Type: *Self Signed Root*, Certificate Type: *Code Signing*).
+
+To force ad-hoc signing:
 
 ```sh
-make sign SIGN_IDENTITY="My Self-Signed Cert"
+make SIGN_IDENTITY=-
 ```
 
 Extra `codesign` flags can be passed through `SIGN_FLAGS`, e.g. `SIGN_FLAGS="--options runtime"`.
@@ -57,8 +63,8 @@ This updates `SpoofDPI App/Other/Binaries/spoofdpi-arm` and `Constants.libraryVe
 
 ## Install
 
-1. Run `make`, then unzip `dist/SpoofDPI.App.zip` (or copy `dist/SpoofDPI App.app`) into `/Applications`.
-2. First launch: right-click the app → **Open** → confirm. Ad-hoc signed apps are not notarized, so a plain double-click is blocked the first time.
+1. Run `make install` (or unzip `dist/SpoofDPI.App.zip` into `/Applications`).
+2. First launch: right-click the app → **Open** → confirm. Locally signed apps are not notarized, so a plain double-click may be blocked the first time.
 3. If macOS still refuses to open it, remove the quarantine flag:
 
    ```sh

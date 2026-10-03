@@ -6,9 +6,9 @@ Personal fork of [SpoofDPIApp/SpoofDPI-App](https://github.com/SpoofDPIApp/Spoof
 
 ```sh
 make            # xcodebuild Release (arm64 only, unsigned) → re-sign in dist/ → dist/SpoofDPI.App.zip
-make sign SIGN_IDENTITY="Cert Name"   # self-signed instead of ad-hoc ("-")
+make SIGN_IDENTITY=-                  # ad-hoc instead of the default "SpoofDPI Local" identity
 make update-core [CORE_VERSION=x.y.z] # replace embedded binaries + Constants.libraryVersion (needs gh)
-make core-version | verify | run | clean | help
+make install | uninstall | bump | version | proxy-reset | run | clean | help
 ```
 
 No tests. Verify changes with `make` (build + `codesign --verify`) and by running the app.
@@ -27,6 +27,7 @@ No tests. Verify changes with `make` (build + `codesign --verify`) and by runnin
 
 - SpoofDPI ≥1.0 CLI differs from 0.x: system proxy is opt-in and a TUI runs by default, so the app always passes `--no-tui --auto-configure-network`. Re-check `--help` after every `update-core`.
 - Apple Silicon only: one bundled binary `spoofdpi-arm` (`Constants.libraryProcessName`), `ARCHS=arm64` set by the Makefile.
-- Version: `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` in `project.pbxproj`; bump `Other/ActualBuildNumber.txt` with the build number, or the update alert misfires.
+- Version: `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` in `project.pbxproj`; use `make bump` so `Other/ActualBuildNumber.txt` stays in sync, or the update alert misfires.
+- Xcode ships GNU Make 3.81: no `.SHELLFLAGS`, `--eval` or `.ONESHELL`; prefix multi-command recipes with `$(STRICT)`.
 - `.claude/settings.local.json` holds secrets — it is gitignored; never commit it.
 - Code style: 4-space indent, `guard` early returns, `[weak self]` in closures, `.with { }` builder from `Framework/Configurable.swift`.
