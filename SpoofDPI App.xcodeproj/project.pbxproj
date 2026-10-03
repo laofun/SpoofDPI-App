@@ -22,13 +22,9 @@
 		57A420602C60DF5800639250 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4205F2C60DF5800639250 /* Constants.swift */; };
 		57A420652C60EA4600639250 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 57A420642C60EA4600639250 /* Localizable.xcstrings */; };
 		57A420672C60FB3D00639250 /* ProtectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A420662C60FB3D00639250 /* ProtectionService.swift */; };
-		57A420702C6158B100639250 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57A4206F2C6158B100639250 /* GoogleService-Info.plist */; };
 		57A420912C62477900639250 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A420902C62477900639250 /* Utils.swift */; };
 		57A420942C624D1D00639250 /* spoofdpi-arm in Resources */ = {isa = PBXBuildFile; fileRef = 57A420922C624D1D00639250 /* spoofdpi-arm */; };
-		57A420952C624D1D00639250 /* spoofdpi-x64 in Resources */ = {isa = PBXBuildFile; fileRef = 57A420932C624D1D00639250 /* spoofdpi-x64 */; };
 		57A4209A2C6259D900639250 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A420992C6259D900639250 /* Bundle.swift */; };
-		57A4209D2C62886200639250 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 57A4209C2C62886200639250 /* FirebaseAnalytics */; };
-		57A4209F2C62886200639250 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 57A4209E2C62886200639250 /* FirebaseCrashlytics */; };
 		57A420A12C6288E000639250 /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A420A02C6288E000639250 /* UpdateService.swift */; };
 		57D9BC042C6BA1EE003EEDC0 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9BC032C6BA1EE003EEDC0 /* Configurable.swift */; };
 		57D9BC062C6BA23A003EEDC0 /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9BC052C6BA23A003EEDC0 /* NSObject.swift */; };
@@ -52,10 +48,8 @@
 		57A4205F2C60DF5800639250 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		57A420642C60EA4600639250 /* Localizable.xcstrings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		57A420662C60FB3D00639250 /* ProtectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionService.swift; sourceTree = "<group>"; };
-		57A4206F2C6158B100639250 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		57A420902C62477900639250 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		57A420922C624D1D00639250 /* spoofdpi-arm */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "spoofdpi-arm"; sourceTree = "<group>"; };
-		57A420932C624D1D00639250 /* spoofdpi-x64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "spoofdpi-x64"; sourceTree = "<group>"; };
 		57A420992C6259D900639250 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		57A420A02C6288E000639250 /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
 		57D9BC032C6BA1EE003EEDC0 /* Configurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
@@ -67,8 +61,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57A4209D2C62886200639250 /* FirebaseAnalytics in Frameworks */,
-				57A4209F2C62886200639250 /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,7 +92,6 @@
 				57A4204E2C60DE3200639250 /* Other */,
 				57A420382C60D98600639250 /* Assets.xcassets */,
 				57A4205F2C60DF5800639250 /* Constants.swift */,
-				57A4206F2C6158B100639250 /* GoogleService-Info.plist */,
 				57A420642C60EA4600639250 /* Localizable.xcstrings */,
 				57A4203D2C60D98600639250 /* SpoofDPI.entitlements */,
 			);
@@ -165,7 +156,6 @@
 			isa = PBXGroup;
 			children = (
 				57A420922C624D1D00639250 /* spoofdpi-arm */,
-				57A420932C624D1D00639250 /* spoofdpi-x64 */,
 			);
 			path = Binaries;
 			sourceTree = "<group>";
@@ -186,10 +176,6 @@
 			dependencies = (
 			);
 			name = "SpoofDPI App";
-			packageProductDependencies = (
-				57A4209C2C62886200639250 /* FirebaseAnalytics */,
-				57A4209E2C62886200639250 /* FirebaseCrashlytics */,
-			);
 			productName = "SpoofDPI App";
 			productReference = 57A420312C60D98500639250 /* SpoofDPI App.app */;
 			productType = "com.apple.product-type.application";
@@ -219,9 +205,6 @@
 				ru,
 			);
 			mainGroup = 57A420282C60D98500639250;
-			packageReferences = (
-				57A4209B2C62886200639250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-			);
 			productRefGroup = 57A420322C60D98500639250 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -238,9 +221,7 @@
 			files = (
 				57A420942C624D1D00639250 /* spoofdpi-arm in Resources */,
 				57A420652C60EA4600639250 /* Localizable.xcstrings in Resources */,
-				57A420952C624D1D00639250 /* spoofdpi-x64 in Resources */,
 				57A420392C60D98600639250 /* Assets.xcassets in Resources */,
-				57A420702C6158B100639250 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,29 +449,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		57A4209B2C62886200639250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = exactVersion;
-				version = 11.2.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		57A4209C2C62886200639250 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 57A4209B2C62886200639250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		57A4209E2C62886200639250 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 57A4209B2C62886200639250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 57A420292C60D98500639250 /* Project object */;
 }

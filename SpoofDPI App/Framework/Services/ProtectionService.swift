@@ -65,8 +65,7 @@ final class ProtectionService: ObservableObject {
             updateStatus()
             
             if status == .initializing {
-                let deviceArchitecture = Utils.getDeviceArchitecture()
-                activateLibrary(for: deviceArchitecture)
+                activateLibrary()
             }
         }
         
@@ -85,20 +84,15 @@ final class ProtectionService: ObservableObject {
     }
     
     private func updateStatus() {
-        if Utils.executeTerminalCommand("ps -A")?.contains(Constants.libraryProcessNamePrefix) == true {
+        if Utils.executeTerminalCommand("ps -A")?.contains(Constants.libraryProcessName) == true {
             status = .active
         } else {
             status = settingsService.isProtectionEnabled ? .initializing : .stopped
         }
     }
     
-    private func activateLibrary(for deviceArchitecture: SupportedArchitecture) {
-        guard
-            let path = Bundle.main.path(
-                forResource: Constants.libraryProcessNamePrefix + deviceArchitecture.rawValue,
-                ofType: ""
-            )
-        else {
+    private func activateLibrary() {
+        guard let path = Bundle.main.path(forResource: Constants.libraryProcessName, ofType: "") else {
             return
         }
         
@@ -106,7 +100,7 @@ final class ProtectionService: ObservableObject {
             let parameters = self.settingsService.libraryParameters
             
             Utils.executeTerminalCommand(
-                "\"\(path)\"" + (!parameters.isEmpty ? " " + parameters : "")
+                "\"\(path)\" " + Constants.libraryDefaultParameters + (!parameters.isEmpty ? " " + parameters : "")
             )
         }
     }
@@ -115,9 +109,7 @@ final class ProtectionService: ObservableObject {
         libraryReactivationTimer?.invalidate()
         libraryReactivationTimer = nil
         
-        SupportedArchitecture.allCases.forEach {
-            Utils.executeTerminalCommand("killall " + Constants.libraryProcessNamePrefix + $0.rawValue)
-        }
+        Utils.executeTerminalCommand("killall " + Constants.libraryProcessName)
         
         status = .stopped
     }

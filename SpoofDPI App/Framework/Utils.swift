@@ -28,13 +28,4 @@ final class Utils {
         let outputData = fileHandle.readDataToEndOfFile()
         return .init(data: outputData, encoding: .utf8)
     }
-    
-    static func getDeviceArchitecture() -> SupportedArchitecture {
-        return executeTerminalCommand("uname -m")?.contains("arm") == true ? .arm : .x64
-    }
-}
-
-enum SupportedArchitecture: String, CaseIterable {
-    case arm
-    case x64
 }

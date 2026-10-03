@@ -1,40 +1,85 @@
-<img src="https://github.com/SpoofDPIApp/SpoofDPI-App/raw/main/Other/Readme/Logo.png" width="110" height="110"/>
+<img src="Other/Readme/Logo.png" width="110" height="110"/>
 
 # SpoofDPI App
-⬇️ [Скачать бесплатно](https://github.com/SpoofDPIApp/SpoofDPI-App/releases/latest/download/SpoofDPI.App.zip)
 
-Простое в использовании приложение **для Mac**, благодаря которому **YouTube** снова заработает отлично! Реализовано на основе библиотеки [SpoofDPI](https://github.com/xvzc/SpoofDPI) — спасибо большое её автору.
+A simple **macOS** menu-bar app that bypasses Deep Packet Inspection (DPI) so blocked or throttled sites (e.g. **YouTube**) work normally again. It is a thin GUI around the [SpoofDPI](https://github.com/xvzc/SpoofDPI) proxy by [@xvzc](https://github.com/xvzc).
 
-## Как установить
-1. Скачайте архив с последней версией приложения по ссылке выше
-2. Распакуйте скачанный архив
-3. Перенесите распакованное приложение в папку «Программы»
-4. Нажмите на приложении правой кнопкой мыши, выберите «Открыть»\
-(обычным двойным кликом приложение в первый раз запустить не удастся)
-5. Разрешите запуск в появившемся системном предупреждении
-6. Подождите, пока приложение инициализируется
-7. Готово!
+> This is a personal fork of [SpoofDPIApp/SpoofDPI-App](https://github.com/SpoofDPIApp/SpoofDPI-App), updated to SpoofDPI **1.5.4**, trimmed to **Apple Silicon only**, without Firebase analytics, and built locally with ad-hoc signing.
 
-Окно приложения можно не держать постоянно открытым — в системной панели сверху всё равно останется его иконка с изображением очков.
+## How it works
 
-### Если приложение не запускается
+The app bundles the SpoofDPI binary for Apple Silicon. When protection is enabled it launches it as a local HTTP proxy (`127.0.0.1:8080`) and lets SpoofDPI configure the macOS system proxy. A watchdog restarts the proxy if it exits; disabling protection or quitting the app stops it and restores the network settings.
 
-<img src="https://github.com/SpoofDPIApp/SpoofDPI-App/raw/main/Other/Readme/Error.png" width="416" height="308"/>
+The window can be closed — the app keeps running behind the glasses icon in the menu bar.
 
-К сожалению, на некоторых компьютерах приложение может не запуститься. В таком случае необходимо выполнить следующие дополнительные действия…
+## Requirements
 
-1. Откройте системный поиск Spotlight\
-(иконка с изображением лупы в правой части системной панели вверху экрана)
-2. Найдите приложение «Терминал» (или «Terminal») и запустите его
-3. В появившемся окне введите команду `xattr -d -r com.apple.quarantine`, добавьте после неё пробел и перетащите файл приложения в прямо в окно терминала
-4. Нажмите клавишу Enter
-5. Снова попытайтесь запустить приложение в соответствии с шагом 4 первоначальной инструкции
+- macOS 13 Ventura or later
+- Apple Silicon Mac (M1 or newer)
+- To build: Xcode 16+, [GitHub CLI](https://cli.github.com) (`gh`, only for `make update-core`)
 
-## Системные требования
+## Build
 
-- Чип Apple Silicon или процессор Intel
-- macOS 13 Ventura или новее
+```sh
+make            # build (arm64) → re-sign ad-hoc → dist/SpoofDPI.App.zip
+make run        # build, sign and launch dist/SpoofDPI App.app
+make help       # list all targets
+```
 
-## Заключение
+| Target | Description |
+| --- | --- |
+| `build` | Release build with `xcodebuild`, unsigned, into `build/` |
+| `dist` | Copy the app into `dist/` |
+| `sign` | Re-sign `dist/SpoofDPI App.app` (inside-out) and verify |
+| `zip` | Create `dist/SpoofDPI.App.zip` |
+| `update-core` | Download a SpoofDPI release, verify checksums, replace the embedded binaries |
+| `core-version` | Print the embedded SpoofDPI version |
+| `clean` | Remove `build/` and `dist/` |
 
-Если приложение вам понравилось, пожалуйста, поставьте звёздочку репозиторию вверху-справа этой страницы. Большое спасибо! 👍
+### Signing
+
+By default the app is signed **ad-hoc** (`SIGN_IDENTITY=-`). To use a self-signed certificate from your Keychain (keeps the signature stable across rebuilds, so macOS permissions persist):
+
+```sh
+make sign SIGN_IDENTITY="My Self-Signed Cert"
+```
+
+Extra `codesign` flags can be passed through `SIGN_FLAGS`, e.g. `SIGN_FLAGS="--options runtime"`.
+
+### Updating SpoofDPI
+
+```sh
+make update-core                     # latest release
+make update-core CORE_VERSION=1.5.4  # specific version
+```
+
+This updates `SpoofDPI App/Other/Binaries/spoofdpi-arm` and `Constants.libraryVersion`. Check the upstream changelog for CLI changes — the app always passes `--no-tui --auto-configure-network` (see `Constants.libraryDefaultParameters`).
+
+## Install
+
+1. Run `make`, then unzip `dist/SpoofDPI.App.zip` (or copy `dist/SpoofDPI App.app`) into `/Applications`.
+2. First launch: right-click the app → **Open** → confirm. Ad-hoc signed apps are not notarized, so a plain double-click is blocked the first time.
+3. If macOS still refuses to open it, remove the quarantine flag:
+
+   ```sh
+   xattr -dr com.apple.quarantine "/Applications/SpoofDPI App.app"
+   ```
+
+## Custom parameters
+
+The gear button → *SpoofDPI launch parameters* accepts extra SpoofDPI flags, appended after the defaults. Examples:
+
+```
+--https-split-mode chunk --https-chunk-size 1
+--dns-mode https
+--https-disorder
+```
+
+Run `"SpoofDPI App/Other/Binaries/spoofdpi-arm" --help` or see the [SpoofDPI docs](https://spoofdpi.xvzc.dev) for all options.
+
+> **Upgrading from 0.x:** old flags such as `-window-size`, `-enable-doh` or `-system-proxy` no longer exist. Parameters saved with an older version are cleared automatically on first launch.
+
+## Credits
+
+- [SpoofDPI](https://github.com/xvzc/SpoofDPI) by @xvzc — the core proxy (Apache-2.0)
+- [SpoofDPI App](https://github.com/SpoofDPIApp/SpoofDPI-App) — the original macOS app
