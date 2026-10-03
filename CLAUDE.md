@@ -27,6 +27,7 @@ No tests. Verify changes with `make` (build + `codesign --verify`) and by runnin
 ## Gotchas
 
 - SpoofDPI ≥1.0 CLI differs from 0.x: system proxy is opt-in and a TUI runs by default, so the app always passes `--no-tui --auto-configure-network`. Re-check `--help` after every `update-core`.
+- SpoofDPI 1.5.4 pitfalls (see README → Troubleshooting): exits on duplicated flags (app dedupes defaults), `fake-count` needs root/pcap, PAC proxy silently fails on network service names with spaces. Debug by running the binary on another port with `--log-level debug`.
 - Apple Silicon only: one bundled binary `spoofdpi-arm` (`Constants.libraryProcessName`), `ARCHS=arm64` set by the Makefile.
 - Version: `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` in `project.pbxproj`; use `make bump` so `Other/ActualBuildNumber.txt` stays in sync, or the update alert misfires.
 - Xcode ships GNU Make 3.81: no `.SHELLFLAGS`, `--eval` or `.ONESHELL`; prefix multi-command recipes with `$(STRICT)`.

@@ -78,15 +78,60 @@ This updates `SpoofDPI App/Other/Binaries/spoofdpi-arm` and `Constants.libraryVe
 
 ## Custom parameters
 
-The gear button → *SpoofDPI launch parameters* accepts extra SpoofDPI flags, appended after the defaults. Examples:
+The gear button → *SpoofDPI launch parameters* accepts extra SpoofDPI flags, appended after the defaults (`--no-tui --auto-configure-network`, no need to type them). Examples:
 
 ```
---https-split-mode chunk --https-chunk-size 1
---dns-mode https
+--dns-mode https --dns-cache          # good default when the ISP poisons DNS
 --https-disorder
+--https-split-mode chunk --https-chunk-size 1
 ```
 
 Run `"SpoofDPI App/Other/Binaries/spoofdpi-arm" --help` or see the [SpoofDPI docs](https://spoofdpi.xvzc.dev) for all options.
+
+## Per-domain config
+
+Flags apply to every site. To bypass only the blocked domains and leave everything else untouched, use a TOML config: gear button → **Edit Config File…** opens (and creates) `~/.config/spoofdpi/spoofdpi.toml`, which SpoofDPI loads automatically. Keep the launch parameters field **empty** — flags override the global values in the file. Toggle *DPI protection* off and on after editing.
+
+```toml
+# Other sites: behave as if SpoofDPI were not there
+[dns]
+mode = "system"
+
+[https]
+skip = true
+
+# Blocked domains only: DNS over HTTPS + default SNI split
+[[rules]]
+name = "blocked-site"
+priority = 50
+match = { domains = ["blocked-site.com", "*.blocked-site.com"] }
+dns = { mode = "https", cache = true }
+https = { skip = false }
+```
+
+`dns.cache` is worth keeping on: a DoH lookup takes ~200 ms, cached entries are instant and expire with the record's TTL (it is ignored in `system` mode).
+
+## Troubleshooting
+
+| Symptom | Cause / fix |
+| --- | --- |
+| Stuck at *Initialization…* | SpoofDPI exits on invalid or duplicated flags. Run the binary by hand (below) to see the error. |
+| Stuck at *Initialization…* with `fake-count` | Fake packets need pcap/BPF (root); the app runs unprivileged. Don't use `fake-count`. |
+| App says active but sites are not proxied (`scutil --proxy` shows no `ProxyAutoConfigEnable : 1`) | SpoofDPI 1.5.4 fails to set the PAC proxy when the network service name contains spaces (e.g. `USB 10/100/1000 LAN`). Rename it: `networksetup -renamenetworkservice "USB 10/100/1000 LAN" "USB-LAN"`. |
+| Site blocked even through the proxy | Often DNS poisoning by the router/ISP resolver (`dig blocked-site.com` returns `127.0.0.1` or a wrong IP). Use `dns.mode = "https"`. |
+| `curl` fails but the browser works | Some ISPs reset by SNI; the browser's larger ClientHello may pass where curl's does not. Test in the browser. |
+| No internet after a crash | `make proxy-reset` |
+
+Test a configuration on a spare port without touching the system proxy:
+
+```sh
+B="/Applications/SpoofDPI App.app/Contents/Resources/spoofdpi-arm"
+"$B" --no-tui --listen-addr 127.0.0.1:18080 --log-level debug &
+curl -s -o /dev/null -w "%{http_code}\n" -x http://127.0.0.1:18080 https://blocked-site.com
+kill %1
+```
+
+The debug log shows which rule matched (`tls_desync … mode=…`), DNS timing and `request blocked` errors.
 
 > **Upgrading from 0.x:** old flags such as `-window-size`, `-enable-doh` or `-system-proxy` no longer exist. Parameters saved with an older version are cleared automatically on first launch.
 
