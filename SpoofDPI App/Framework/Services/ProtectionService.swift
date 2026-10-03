@@ -98,9 +98,14 @@ final class ProtectionService: ObservableObject {
         
         DispatchQueue.global(qos: .userInitiated).async {
             let parameters = self.settingsService.libraryParameters
-            
+            // SpoofDPI refuses duplicated flags, so skip defaults the user already typed
+            let defaultParameters = Constants.libraryDefaultParameters
+                .split(separator: " ")
+                .filter { !parameters.split(separator: " ").contains($0) }
+                .joined(separator: " ")
+
             Utils.executeTerminalCommand(
-                "\"\(path)\" " + Constants.libraryDefaultParameters + (!parameters.isEmpty ? " " + parameters : "")
+                "\"\(path)\" " + defaultParameters + (!parameters.isEmpty ? " " + parameters : "")
             )
         }
     }

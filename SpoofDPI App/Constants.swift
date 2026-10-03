@@ -19,4 +19,7 @@ enum Constants {
     static let libraryVersion = "1.5.4"
     // Since 1.x the system proxy is opt-in and a TUI is shown by default
     static let libraryDefaultParameters = "--no-tui --auto-configure-network"
+    // One of the paths SpoofDPI loads automatically
+    static let libraryConfigURL = FileManager.default.homeDirectoryForCurrentUser
+        .appending(path: ".config/spoofdpi/spoofdpi.toml")
 }

@@ -27,6 +27,7 @@ enum LocalizedString {
                 
                 enum Buttons {
                     static let cancel = String(localized: "Scene.Main.SettingsAlert.Buttons.Cancel")
+                    static let editConfig = String(localized: "Scene.Main.SettingsAlert.Buttons.EditConfig")
                     static let save = String(localized: "Scene.Main.SettingsAlert.Buttons.Save")
                 }
             }

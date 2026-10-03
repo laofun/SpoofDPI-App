@@ -100,6 +100,17 @@
         }
       }
     },
+    "Scene.Main.SettingsAlert.Buttons.EditConfig" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Config File…"
+          }
+        }
+      }
+    },
     "Scene.Main.SettingsAlert.Buttons.Save" : {
       "extractionState" : "manual",
       "localizations" : {
