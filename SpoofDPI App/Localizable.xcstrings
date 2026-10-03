@@ -9,12 +9,6 @@
             "state" : "translated",
             "value" : "Open %@"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Открыть %@"
-          }
         }
       }
     },
@@ -25,12 +19,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "DPI protection"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Защита от DPI"
           }
         }
       }
@@ -43,12 +31,6 @@
             "state" : "translated",
             "value" : "Quit"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Завершить"
-          }
         }
       }
     },
@@ -59,12 +41,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Repository on GitHub"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Репозиторий на GitHub"
           }
         }
       }
@@ -77,12 +53,6 @@
             "state" : "translated",
             "value" : "About %@"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "О приложении %@"
-          }
         }
       }
     },
@@ -93,12 +63,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Repository on GitHub"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Репозиторий на GitHub"
           }
         }
       }
@@ -111,12 +75,6 @@
             "state" : "translated",
             "value" : "Check for Updates"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Проверить обновления"
-          }
         }
       }
     },
@@ -127,12 +85,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "DPI protection"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Защита от DPI"
           }
         }
       }
@@ -145,12 +97,6 @@
             "state" : "translated",
             "value" : "Cancel"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отменить"
-          }
         }
       }
     },
@@ -161,12 +107,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сохранить"
           }
         }
       }
@@ -179,12 +119,6 @@
             "state" : "translated",
             "value" : "SpoofDPI launch parameters"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Параметры запуска SpoofDPI"
-          }
         }
       }
     },
@@ -195,12 +129,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Active!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Активно!"
           }
         }
       }
@@ -213,12 +141,6 @@
             "state" : "translated",
             "value" : "Initialization…"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Инициализация…"
-          }
         }
       }
     },
@@ -229,12 +151,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Launch automatically"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Запускать автоматически"
           }
         }
       }
@@ -247,12 +163,6 @@
             "state" : "translated",
             "value" : "Show in Menu Bar"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Иконка в строке меню"
-          }
         }
       }
     },
@@ -263,12 +173,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please turn off VPN"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пожалуйста, выключите VPN"
           }
         }
       }
@@ -281,12 +185,6 @@
             "state" : "translated",
             "value" : "Close"
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Закрыть"
-          }
         }
       }
     },
@@ -297,12 +195,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Update"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Обновить"
           }
         }
       }
@@ -315,12 +207,6 @@
             "state" : "translated",
             "value" : "You are using an outdated version of the app. It may work inefficiently."
           }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вы используете неактуальную версию приложения. Она может работать неэффективно."
-          }
         }
       }
     },
@@ -332,11 +218,38 @@
             "state" : "translated",
             "value" : "Update %@"
           }
-        },
-        "ru" : {
+        }
+      }
+    },
+    "Updates.LibraryAlert.Buttons.ReleaseNotes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Обновите %@"
+            "value" : "Release Notes"
+          }
+        }
+      }
+    },
+    "Updates.LibraryAlert.Description.Template" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app embeds SpoofDPI %@. To use the new version, run “make upgrade” in the project folder."
+          }
+        }
+      }
+    },
+    "Updates.LibraryAlert.Title.Template" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SpoofDPI %@ is available"
           }
         }
       }

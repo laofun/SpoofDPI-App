@@ -8,7 +8,8 @@ Personal fork of [SpoofDPIApp/SpoofDPI-App](https://github.com/SpoofDPIApp/Spoof
 make            # xcodebuild Release (arm64 only, unsigned) → re-sign in dist/ → dist/SpoofDPI.App.zip
 make SIGN_IDENTITY=-                  # ad-hoc instead of the default "SpoofDPI Local" identity
 make update-core [CORE_VERSION=x.y.z] # replace embedded binaries + Constants.libraryVersion (needs gh)
-make install | uninstall | bump | version | proxy-reset | run | clean | help
+make upgrade                          # update-core + install
+make check-core | install | uninstall | bump | version | proxy-reset | run | clean | help
 ```
 
 No tests. Verify changes with `make` (build + `codesign --verify`) and by running the app.
@@ -19,9 +20,9 @@ No tests. Verify changes with `make` (build + `codesign --verify`) and by runnin
 - `Framework/Services/*Service.swift` — `final class` singletons (`static let instance`), `ObservableObject`, Combine sinks on `SettingsService` `@Published` props.
   - `ProtectionService` — core logic: launches `Resources/spoofdpi-arm` via `/bin/sh -c` (`Utils.executeTerminalCommand`), detects it with `ps -A | grep spoofdpi-arm`, 3 s watchdog timer restarts it, stops with `killall` (SpoofDPI traps SIGTERM and restores the system proxy).
   - `SettingsService` — `@AppStorage`-backed settings, incl. free-text `libraryParameters` (cleared on init if it holds 0.x single-dash flags).
-  - `UpdateService` — polls **this fork's** `Other/ActualBuildNumber.txt` on `main`; alert fires if it exceeds `CURRENT_PROJECT_VERSION`.
+  - `UpdateService` — polls **this fork's** `Other/ActualBuildNumber.txt` on `main`; alert fires if it exceeds `CURRENT_PROJECT_VERSION`; also polls the GitHub API for the latest xvzc/SpoofDPI release and alerts when it is newer than `Constants.libraryVersion` (suggests `make upgrade`).
 - `Constants.swift` — `libraryVersion` (shown in UI) and `libraryDefaultParameters`.
-- `Scenes/` — UI; strings in `Localizable.xcstrings` via `Other/LocalizedString.swift`.
+- `Scenes/` — UI; strings in `Localizable.xcstrings` (English only) via `Other/LocalizedString.swift`.
 
 ## Gotchas
 

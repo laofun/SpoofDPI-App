@@ -3,6 +3,7 @@
 #   make                 build + sign + zip (default)
 #   make install         build, sign and (re)install into /Applications
 #   make bump            increment the build number before a release
+#   make upgrade         update SpoofDPI to the latest release and reinstall the app
 #   make update-core CORE_VERSION=1.5.4 refresh the embedded SpoofDPI binary
 
 # macOS ships GNU Make 3.81 (no .SHELLFLAGS): multi-command recipes start with $(STRICT)
@@ -34,7 +35,7 @@ SIGN_FLAGS    ?=
 CORE_REPO     := xvzc/SpoofDPI
 CORE_VERSION  ?= $(shell gh release view -R $(CORE_REPO) --json tagName -q .tagName | sed 's/^v//')
 
-.PHONY: all help build dist sign verify zip run install uninstall bump version update-core proxy-reset clean
+.PHONY: all help build dist sign verify zip run install uninstall bump version check-core update-core upgrade proxy-reset clean
 
 all: zip ## Build, sign and zip the app
 
@@ -100,6 +101,16 @@ version: ## Print app version, build number and embedded SpoofDPI version
 	@echo "App:      $$(grep -m1 -o 'MARKETING_VERSION = [^;]*' "$(PBXPROJ)" | cut -d' ' -f3) (build $$(cat "$(BUILD_NUMBER)"))"
 	@echo "SpoofDPI: $$("$(BIN_DIR)/spoofdpi-arm" --version | head -1 | cut -d' ' -f2) (Constants: $$(grep -o 'libraryVersion = "[^"]*"' "$(CONSTANTS)" | cut -d'"' -f2))"
 
+check-core: ## Check for a newer SpoofDPI release (exit 1 if one exists)
+	@$(STRICT) current=$$(grep -o 'libraryVersion = "[^"]*"' "$(CONSTANTS)" | cut -d'"' -f2); \
+	latest="$(CORE_VERSION)"; \
+	test -n "$$latest" || { echo "Cannot resolve the latest SpoofDPI release"; exit 2; }; \
+	if [ "$$(printf '%s\n%s\n' "$$current" "$$latest" | sort -V | tail -1)" = "$$current" ]; then \
+		echo "SpoofDPI $$current is up to date"; \
+	else \
+		echo "SpoofDPI $$latest is available (embedded: $$current). Run: make upgrade"; exit 1; \
+	fi
+
 update-core: ## Download SpoofDPI CORE_VERSION (default: latest) into the app
 	@test -n "$(CORE_VERSION)" || { echo "Cannot resolve CORE_VERSION"; exit 1; }
 	@echo "Updating SpoofDPI core to $(CORE_VERSION)"
@@ -111,6 +122,8 @@ update-core: ## Download SpoofDPI CORE_VERSION (default: latest) into the app
 	install -m 755 "$$tmp/spoofdpi" "$(BIN_DIR)/spoofdpi-arm"
 	sed -i '' 's/libraryVersion = ".*"/libraryVersion = "$(CORE_VERSION)"/' "$(CONSTANTS)"
 	@$(MAKE) --no-print-directory version
+
+upgrade: update-core install ## Update SpoofDPI to CORE_VERSION (default: latest) and reinstall
 
 proxy-reset: ## Turn off the system proxy SpoofDPI set (if the app crashed)
 	$(STRICT) networksetup -listallnetworkservices | tail -n +2 | sed 's/^\*//' | while IFS= read -r svc; do \

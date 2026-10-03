@@ -18,7 +18,6 @@
 		57A420552C60DEAE00639250 /* WindowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4204A2C60DC2600639250 /* WindowService.swift */; };
 		57A420562C60DEAE00639250 /* MenuBarIconService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4204C2C60DC2600639250 /* MenuBarIconService.swift */; };
 		57A420592C60DEC400639250 /* ProcessInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A420582C60DEC400639250 /* ProcessInfo.swift */; };
-		57A4205E2C60DF4000639250 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4205D2C60DF4000639250 /* Locale.swift */; };
 		57A420602C60DF5800639250 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4205F2C60DF5800639250 /* Constants.swift */; };
 		57A420652C60EA4600639250 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 57A420642C60EA4600639250 /* Localizable.xcstrings */; };
 		57A420672C60FB3D00639250 /* ProtectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A420662C60FB3D00639250 /* ProtectionService.swift */; };
@@ -44,7 +43,6 @@
 		57A4204F2C60DE3B00639250 /* SystemSymbol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSymbol.swift; sourceTree = "<group>"; };
 		57A420512C60DE8900639250 /* LocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		57A420582C60DEC400639250 /* ProcessInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessInfo.swift; sourceTree = "<group>"; };
-		57A4205D2C60DF4000639250 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		57A4205F2C60DF5800639250 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		57A420642C60EA4600639250 /* Localizable.xcstrings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		57A420662C60FB3D00639250 /* ProtectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionService.swift; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				57A420992C6259D900639250 /* Bundle.swift */,
-				57A4205D2C60DF4000639250 /* Locale.swift */,
 				57A420582C60DEC400639250 /* ProcessInfo.swift */,
 				57D9BC052C6BA23A003EEDC0 /* NSObject.swift */,
 			);
@@ -202,7 +199,6 @@
 			knownRegions = (
 				en,
 				Base,
-				ru,
 			);
 			mainGroup = 57A420282C60D98500639250;
 			productRefGroup = 57A420322C60D98500639250 /* Products */;
@@ -249,7 +245,6 @@
 				57A420472C60DBF000639250 /* MainScene.ContentView.swift in Sources */,
 				57A420672C60FB3D00639250 /* ProtectionService.swift in Sources */,
 				57A420352C60D98500639250 /* App.swift in Sources */,
-				57A4205E2C60DF4000639250 /* Locale.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

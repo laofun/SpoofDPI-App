@@ -72,5 +72,21 @@ enum LocalizedString {
                 static let update = String(localized: "Updates.Alert.Buttons.Update")
             }
         }
+        
+        enum LibraryAlert {
+            static func title(version: String) -> String {
+                let template = String(localized: "Updates.LibraryAlert.Title.Template")
+                return .init(format: template, version)
+            }
+            
+            static func description(currentVersion: String) -> String {
+                let template = String(localized: "Updates.LibraryAlert.Description.Template")
+                return .init(format: template, currentVersion)
+            }
+            
+            enum Buttons {
+                static let releaseNotes = String(localized: "Updates.LibraryAlert.Buttons.ReleaseNotes")
+            }
+        }
     }
 }

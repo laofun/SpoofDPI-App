@@ -36,7 +36,9 @@ make help       # list all targets
 | `install` / `uninstall` | Quit the running app, then install into / remove from `/Applications` |
 | `bump` | Increment the build number in the project and `Other/ActualBuildNumber.txt` |
 | `version` | Print app version, build number and embedded SpoofDPI version |
+| `check-core` | Check whether a newer SpoofDPI release exists |
 | `update-core` | Download a SpoofDPI release, verify checksums, replace the embedded binary |
+| `upgrade` | `update-core` + `install` |
 | `proxy-reset` | Turn off the system proxy on all network services (after a crash) |
 | `clean` | Remove `build/` and `dist/` |
 
@@ -54,9 +56,12 @@ Extra `codesign` flags can be passed through `SIGN_FLAGS`, e.g. `SIGN_FLAGS="--o
 
 ### Updating SpoofDPI
 
+The app checks the latest SpoofDPI release every 3 days (and via *Check for Updates*) and shows an alert when a newer core is out. Then run:
+
 ```sh
-make update-core                     # latest release
-make update-core CORE_VERSION=1.5.4  # specific version
+make upgrade                         # latest core → rebuild → reinstall into /Applications
+make check-core                      # just check (exit 1 if a newer release exists)
+make update-core CORE_VERSION=1.5.4  # pin a specific version, without installing
 ```
 
 This updates `SpoofDPI App/Other/Binaries/spoofdpi-arm` and `Constants.libraryVersion`. Check the upstream changelog for CLI changes — the app always passes `--no-tui --auto-configure-network` (see `Constants.libraryDefaultParameters`).
